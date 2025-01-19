@@ -489,119 +489,21 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
 
     // reserved words
     //: `class ::= "class" !idChar white*
-    //: reserved ::= `class
     //: `else ::= "else" !idChar white*
-    //: reserved ::= `else
-
-    //special-token characters
-    //: `!= ::= "!=" white*
-    //: `+ ::= "+" white*
-
-    // a numeric literal
-    //: INT_LITERAL ::= # digit++ white* =>
-    public int convertToInt(int pos, List<Character> s)
-    {
-        try
-        {
-            return Integer.parseInt(s.toString());
-        }
-        catch (NumberFormatException nfx)
-        {
-            error(pos, new OutOfRangeError(s.toString()));
-            return 0;
-        }
-    }
-
-    //================================================================
-    // character patterns -- "helper symbols"
-    //================================================================
-
-    // a character that can be a non-first character in an identifier
-    //: idChar ::= letter => pass
-    //: idChar ::= digit => pass
-    //: idChar ::= "_" => pass
-
-    // a letter
-    //: letter ::= {"a".."z" "A".."Z"} => pass
-
-    // a digit
-    //: digit ::= {"0".."9"} => pass
-
-    //================================================================
-    // whitespace
-    //================================================================
-
-    // whitespace
-    //: white ::= {" " 9 12} // space or tab or form feed
-    //: white ::= eol
-
-    // to handle the common end-of-line sequences on different types
-    // of systems, we treat the sequence CR+LF as an end of line.
-    // Otherwise, we treat CR or LF appearing separately each as an
-    // end of line.
-    //: eol ::= {10} registerNewline
-    //: eol ::= {13} {10} registerNewline
-    //: eol ::= {13} !{10} registerNewline
-
-    // empty symbol which registers a new line at the position reduced
-    //: registerNewline ::= # =>
-    public void registerNewline(int pos)
-    {
-        errorMsg.newline(pos-1);
-    }
-
-    // Potentially useful definitions
-    // printable is any character than shows up when you type
-    //: printable ::= {" ".."~"} => pass
-
-    // eof is the end of file.  It does not match any character.
-    //: eof ::= !{0..255} => void
-
-    //////////// DUMMY TOKEN AND WHITESPACE DEFINITIONS ////////////
-    // Once you create a real definition for one of the below, it will
-    // reduce the number of states of you remove (or comment out) the
-    // dummy definition.
-    ////////////////////////////////////////////////////////////////
-    
-    //: `! ::= !{255} {255} => void
-    //: `% ::= !{255} {255} => void
-    //: `&& ::= !{255} {255} => void
-    //: `* ::= !{255} {255} => void
-    //: `( ::= !{255} {255} => void
-    //: `) ::= !{255} {255} => void
-    //: `{ ::= !{255} {255} => void
-    //: `} ::= !{255} {255} => void
-    //: `- ::= !{255} {255} => void
-    //: `= ::= !{255} {255} => void
-    //: `== ::= !{255} {255} => void
-    //: `[ ::= !{255} {255} => void
-    //: `] ::= !{255} {255} => void
-    //: `|| ::= !{255} {255} => void
-    //: `< ::= !{255} {255} => void
-    //: `<= ::= !{255} {255} => void
-    //: `, ::= !{255} {255} => void
-    //: `> ::= !{255} {255} => void
-    //: `>= ::= !{255} {255} => void
-    //: `: ::= !{255} {255} => void
-    //: `. ::= !{255} {255} => void
-    //: `; ::= !{255} {255} => void
-    //: `++ ::= !{255} {255} => void
-    //: `-- ::= !{255} {255} => void
-    //: `/ ::= !{255} {255} => void
-    //: `boolean ::= !{255} {255} => void
-    //: `extends ::= !{255} {255} => void
-    //: `void ::= !{255} {255} => void
-    //: `int ::= !{255} {255} => void
-    //: `while ::= !{255} {255} => void
-    //: `if ::= !{255} {255} => void
-    //: `for ::= !{255} {255} => void
-    //: `break ::= !{255} {255} => void
-    //: `this ::= !{255} {255} => void
-    //: `false ::= !{255} {255} => void
-    //: `true ::= !{255} {255} => void
-    //: `super ::= !{255} {255} => void
-    //: `null ::= !{255} {255} => void
-    //: `return ::= !{255} {255} => void
+    //: `boolean ::= "boolean" !idChar white*
+    //: `extends ::= "extends" !idChar white*
+    //: `void ::= "void" !idChar white*
+    //: `int ::= "int" !idChar white*
+    //: `while ::= "while" !idChar white*
+    //: `if ::= "if" !idChar white*
+    //: `for ::= "for" !idChar white*
+    //: `break ::= "break" !idChar white*
+    //: `this ::= "this" !idChar white*
+    //: `false ::= "false" !idChar white*
+    //: `true ::= "true" !idChar white*
+    //: `super ::= "super" !idChar white*
+    //: `null ::= "null" !idChar white*
+    //: `return ::= "return" !idChar white*
     //: `instanceof ::= !{255} {255} => void
     //: `new ::= !{255} {255} => void
     //: `abstract ::= !{255} {255} => void
@@ -639,9 +541,134 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     //: `transient ::= !{255} {255} => void
     //: `try ::= !{255} {255} => void
     //: `volatile ::= !{255} {255} => void
+
+    //: reserved ::= `class
+    //: reserved ::= `else
+    //: reserved ::= `boolean
+    //: reserved ::= `extends
+    //: reserved ::= `void
+    //: reserved ::= `int
+    //: reserved ::= `while
+    //: reserved ::= `if
+    //: reserved ::= `for
+    //: reserved ::= `break
+    //: reserved ::= `this
+    //: reserved ::= `false
+    //: reserved ::= `true
+    //: reserved ::= `super
+    //: reserved ::= `null
+    //: reserved ::= `return
+
+
+    //special-token characters
+    //: `! ::= "!" !"=" white*
+    //: `!= ::= "!=" white*
+    //: `= ::= "=" !"=" white*
+    //: `== ::= "==" white*
+    //: `< ::= "<" !"=" white*
+    //: `<= ::= "<=" white*
+    //: `> ::= ">" !"=" white*
+    //: `>= ::= ">=" white*
+    //: `+ ::= "+" !"+" white*
+    //: `++ ::= "++" white*
+    //: `- ::= "-" !"-" white*
+    //: `-- ::= "--" white*
+    //: `* ::= "*" white*
+    //: `% ::= "%" white*
+    //: `&& ::= "&&" white*
+    //: `( ::= "(" white*
+    //: `) ::= ")" white*
+    //: `{ ::= "{" white*
+    //: `} ::= "}" white*
+    //: `[ ::= "[" white*
+    //: `] ::= "]" white*
+    //: `|| ::= "||" white*
+    //: `. ::= "." white*
+    //: `, ::= "," white*
+    //: `: ::= ":" white*
+    //: `; ::= ";" white*
+    //: `/ ::= "/" white*
+
+    // a numeric literal
+    //: INT_LITERAL ::= # digit++ white* =>
+    public int convertToInt(int pos, List<Character> s)
+    {
+        try
+        {
+            return Integer.parseInt(s.toString());
+        }
+        catch (NumberFormatException nfx)
+        {
+            error(pos, new OutOfRangeError(s.toString()));
+            return 0;
+        }
+    }
+
+    //: sq ::= "'" => void
+
+    //: CHARACTER_LITERAL ::= sq printable sq white* =>
+    public int makeChar(char printable)
+    {
+        return (int)printable;
+    }
+
+    //================================================================
+    // character patterns -- "helper symbols"
+    //================================================================
+
+    // a character that can be a non-first character in an identifier
+    //: idChar ::= letter => pass
+    //: idChar ::= digit => pass
+    //: idChar ::= "_" => pass
+
+    // a letter
+    //: letter ::= {"a".."z" "A".."Z"} => pass
+
+    // a digit
+    //: digit ::= {"0".."9"} => pass
+
+    //================================================================
+    // whitespace
+    //================================================================
+
+    // whitespace
+    //: white ::= {" " 9 12} // space or tab or form feed
+    //: white ::= eol
+    // add comment to white
+
+    // comment
+    // use printable for making comments
+
+    // to handle the common end-of-line sequences on different types
+    // of systems, we treat the sequence CR+LF as an end of line.
+    // Otherwise, we treat CR or LF appearing separately each as an
+    // end of line.
+    //: eol ::= {10} registerNewline
+    //: eol ::= {13} {10} registerNewline
+    //: eol ::= {13} !{10} registerNewline
+
+    // empty symbol which registers a new line at the position reduced
+    //: registerNewline ::= # =>
+    public void registerNewline(int pos)
+    {
+        errorMsg.newline(pos-1);
+    }
+
+    // Potentially useful definitions
+    // printable is any character than shows up when you type
+    //: printable ::= {" ".."~"} => pass
+
+    // eof is the end of file.  It does not match any character.
+    //: eof ::= !{0..255} => void
+
+    //////////// DUMMY TOKEN AND WHITESPACE DEFINITIONS ////////////
+    // Once you create a real definition for one of the below, it will
+    // reduce the number of states of you remove (or comment out) the
+    // dummy definition.
+    ////////////////////////////////////////////////////////////////
+    
     //: ID ::= !{255} {255} => text
     //: STRING_LITERAL ::= !{255} {255} => text
-    //: CHARACTER_LITERAL ::= !{255} {255} => int return0(char)
     
     public int return0(char dummy) { return 0; }
 
