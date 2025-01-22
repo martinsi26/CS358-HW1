@@ -656,7 +656,6 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     }
 
     //: sq ::= "'" => void
-
     //: CHARACTER_LITERAL ::= sq printable sq white* =>
     public int makeChar(char printable)
     {
@@ -685,11 +684,18 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     // whitespace
     //: white ::= {" " 9 12} // space or tab or form feed
     //: white ::= eol
-    // //: white ::= comment
+    //: white ::= comment
 
     // comments
-    // //: comment ::= "//" printable** eol white* // single line comment
-    // //: comment ::= "/*" printable** "*/" // multi line comment
+    //: star_slash ::= "*" !"/"
+    //: comment_printable ::= {" "..")" "+".."~"}
+    //: comment_stuff ::= {comment_printable star_slash eol}
+    // //: comment ::= "//" printable* white* // single line comment
+    //: comment ::= "/*" comment_stuff** "*/" // multi line comment
+
+    /* ////* 
+    
+    */
 
     // to handle the common end-of-line sequences on different types
     // of systems, we treat the sequence CR+LF as an end of line.
@@ -704,7 +710,7 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     public void registerNewline(int pos)
     {
         errorMsg.newline(pos-1);
-    }fasdfas
+    }
 
     // Potentially useful definitions
     // printable is any character than shows up when you type
