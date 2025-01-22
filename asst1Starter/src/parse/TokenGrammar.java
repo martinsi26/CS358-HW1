@@ -684,18 +684,26 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     // whitespace
     //: white ::= {" " 9 12} // space or tab or form feed
     //: white ::= eol
-    //: white ::= comment
+    // //: white ::= comment
 
     // comments
-    //: star_slash ::= "*" !"/"
-    //: comment_printable ::= {" "..")" "+".."~"}
-    //: comment_stuff ::= {comment_printable star_slash eol}
-    // //: comment ::= "//" printable* white* // single line comment
-    //: comment ::= "/*" comment_stuff** "*/" // multi line comment
+    // //: star_slash ::= "*" !"/"
+    // //: comment_printable ::= {32..41 43..126} // exclude *
+    // //: comment_stuff ::= comment_printable
+    // //: comment_stuff ::= star_slash
+    // //: comment_stuff ::= eol
 
-    /* ////* 
-    
-    */
+    // ///////////////////////
+    // single line comments //
+    //////////////////////////
+    // //: comment ::= "//" printable**
+
+    /////////////////////////
+    // multi line comments //
+    /////////////////////////
+    // //: comment ::= "/*" comment_stuff** "*/"
+
+    // dlajf;leajl;sf///***** */ *//la;
 
     // to handle the common end-of-line sequences on different types
     // of systems, we treat the sequence CR+LF as an end of line.
