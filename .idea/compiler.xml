@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <excludeFromCompile>
+      <file url="file://$PROJECT_DIR$/asst1Starter/Test0.java" />
+      <file url="file://$PROJECT_DIR$/asst1Starter/Test1.java" />
+      <file url="file://$PROJECT_DIR$/asst1Starter/testCases/charIllegalXtn4.java" />
+      <file url="file://$PROJECT_DIR$/asst1Starter/testCases/charsXtn2.java" />
+      <file url="file://$PROJECT_DIR$/asst1Starter/testCases/charUnterminatedXtn4.java" />
+      <file url="file://$PROJECT_DIR$/asst1Starter/testCases/charWrongLengthXtn4.java" />
+      <file url="file://$PROJECT_DIR$/asst1Starter/testCases/commentInCommentXtn1.java" />
+      <file url="file://$PROJECT_DIR$/asst1Starter/testCases/comments.java" />
+      <file url="file://$PROJECT_DIR$/asst1Starter/testCases/commentUnterminatedXtn4.java" />
+      <file url="file://$PROJECT_DIR$/asst1Starter/testCases/commentWithIllegal.java" />
+      <file url="file://$PROJECT_DIR$/asst1Starter/testCases/hexIntXtn3.java" />
+      <file url="file://$PROJECT_DIR$/asst1Starter/testCases/identifiers.java" />
+      <file url="file://$PROJECT_DIR$/asst1Starter/testCases/int.java" />
+      <file url="file://$PROJECT_DIR$/asst1Starter/testCases/keywords.java" />
+      <file url="file://$PROJECT_DIR$/asst1Starter/testCases/octalXtn3.java" />
+      <file url="file://$PROJECT_DIR$/asst1Starter/testCases/operatorsAndPunctuation.java" />
+      <file url="file://$PROJECT_DIR$/asst1Starter/testCases/strings.java" />
+      <file url="file://$PROJECT_DIR$/asst1Starter/testCases/stringsXtn2.java" />
+      <file url="file://$PROJECT_DIR$/asst1Starter/testCases/stringUnterminat4edXtn4.java" />
+      <file url="file://$PROJECT_DIR$/asst1Starter/src/parse/TokenGrammar.java" />
+      <file url="file://$PROJECT_DIR$/asst1Starter/src/parse/TokenGrammarParseTable.java" />
+      <file url="file://$PROJECT_DIR$/asst1Starter/src/main/Main1.java" />
+    </excludeFromCompile>
+  </component>
+</project>

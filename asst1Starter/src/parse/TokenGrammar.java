@@ -504,43 +504,43 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     //: `super ::= "super" !idChar white*
     //: `null ::= "null" !idChar white*
     //: `return ::= "return" !idChar white*
-    //: `instanceof ::= !{255} {255} => void
-    //: `new ::= !{255} {255} => void
-    //: `abstract ::= !{255} {255} => void
-    //: `assert ::= !{255} {255} => void
-    //: `byte ::= !{255} {255} => void
-    //: `case ::= !{255} {255} => void
-    //: `catch ::= !{255} {255} => void
-    //: `char ::= !{255} {255} => void
-    //: `const ::= !{255} {255} => void
-    //: `continue ::= !{255} {255} => void
-    //: `default ::= !{255} {255} => void
-    //: `do ::= !{255} {255} => void
-    //: `double ::= !{255} {255} => void
-    //: `enum ::= !{255} {255} => void
-    //: `final ::= !{255} {255} => void
-    //: `finally ::= !{255} {255} => void
-    //: `float ::= !{255} {255} => void
-    //: `goto ::= !{255} {255} => void
-    //: `implements ::= !{255} {255} => void
-    //: `import ::= !{255} {255} => void
-    //: `interface ::= !{255} {255} => void
-    //: `long ::= !{255} {255} => void
-    //: `native ::= !{255} {255} => void
-    //: `package ::= !{255} {255} => void
-    //: `private ::= !{255} {255} => void
-    //: `protected ::= !{255} {255} => void
-    //: `public ::= !{255} {255} => void
-    //: `short ::= !{255} {255} => void
-    //: `static ::= !{255} {255} => void
-    //: `strictfp ::= !{255} {255} => void
-    //: `switch ::= !{255} {255} => void
-    //: `synchronized ::= !{255} {255} => void
-    //: `throw ::= !{255} {255} => void
-    //: `throws ::= !{255} {255} => void
-    //: `transient ::= !{255} {255} => void
-    //: `try ::= !{255} {255} => void
-    //: `volatile ::= !{255} {255} => void
+    //: `instanceof ::= "instanceof" !idChar white*
+    //: `new ::= "new" !idChar white*
+    //: `abstract ::= "abstract" !idChar white*
+    //: `assert ::= "assert" !idChar white*
+    //: `byte ::= "byte" !idChar white*
+    //: `case ::= "case" !idChar white*
+    //: `catch ::= "catch" !idChar white*
+    //: `char ::= "char" !idChar white*
+    //: `const ::= "const" !idChar white*
+    //: `continue ::= "continue" !idChar white*
+    //: `default ::= "default" !idChar white*
+    //: `do ::= "do" !idChar white*
+    //: `double ::= "double" !idChar white*
+    //: `enum ::= "enum" !idChar white*
+    //: `final ::= "final" !idChar white*
+    //: `finally ::= "finally" !idChar white*
+    //: `float ::= "float" !idChar white*
+    //: `goto ::= "goto" !idChar white*
+    //: `implements ::= "implements" !idChar white*
+    //: `import ::= "import" !idChar white*
+    //: `interface ::= "interface" !idChar white*
+    //: `long ::= "long" !idChar white*
+    //: `native ::= "native" !idChar white*
+    //: `package ::= "package" !idChar white*
+    //: `private ::= "private" !idChar white*
+    //: `protected ::= "protected" !idChar white*
+    //: `public ::= "public" !idChar white*
+    //: `short ::= "short" !idChar white*
+    //: `static ::= "static" !idChar white*
+    //: `strictfp ::= "strictfp" !idChar white*
+    //: `switch ::= "switch" !idChar white*
+    //: `synchronized ::= "synchronized" !idChar white*
+    //: `throw ::= "throw" !idChar white*
+    //: `throws ::= "throws" !idChar white*
+    //: `transient ::= "transient" !idChar white*
+    //: `try ::= "try" !idChar white*
+    //: `volatile ::= "volatile" !idChar white*
 
     //: reserved ::= `class
     //: reserved ::= `else
@@ -558,7 +558,43 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     //: reserved ::= `super
     //: reserved ::= `null
     //: reserved ::= `return
-
+    //: reserved ::= `instanceof
+    //: reserved ::= `new
+    //: reserved ::= `abstract
+    //: reserved ::= `assert
+    //: reserved ::= `byte
+    //: reserved ::= `case
+    //: reserved ::= `catch
+    //: reserved ::= `char
+    //: reserved ::= `const
+    //: reserved ::= `continue
+    //: reserved ::= `default
+    //: reserved ::= `do
+    //: reserved ::= `double
+    //: reserved ::= `enum
+    //: reserved ::= `final
+    //: reserved ::= `finally
+    //: reserved ::= `float
+    //: reserved ::= `goto
+    //: reserved ::= `implements
+    //: reserved ::= `import
+    //: reserved ::= `interface
+    //: reserved ::= `long
+    //: reserved ::= `native
+    //: reserved ::= `package
+    //: reserved ::= `private
+    //: reserved ::= `protected
+    //: reserved ::= `public
+    //: reserved ::= `short
+    //: reserved ::= `static
+    //: reserved ::= `strictfp
+    //: reserved ::= `switch
+    //: reserved ::= `synchronized
+    //: reserved ::= `throw
+    //: reserved ::= `throws
+    //: reserved ::= `transient
+    //: reserved ::= `try
+    //: reserved ::= `volatile
 
     //special-token characters
     //: `! ::= "!" !"=" white*
@@ -589,6 +625,13 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     //: `; ::= ";" white*
     //: `/ ::= "/" white*
 
+    //: identifier ::= letter idChar** => pass
+    //: ID ::= !reserved identifier white* =>
+    public String makeIdentifier(char letter, List<Character> s) 
+    {
+        return letter + s.toString();
+    }
+
     // a numeric literal
     //: INT_LITERAL ::= # digit++ white* =>
     public int convertToInt(int pos, List<Character> s)
@@ -602,6 +645,14 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
             error(pos, new OutOfRangeError(s.toString()));
             return 0;
         }
+    }
+
+    //: dq ::= '"' => void
+    //: stringChar ::= !dq printable => pass
+    //: STRING_LITERAL ::= dq stringChar* dq white* =>
+    public String makeString(List<Character> s) 
+    {
+        return s.toString();
     }
 
     //: sq ::= "'" => void
@@ -634,10 +685,11 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     // whitespace
     //: white ::= {" " 9 12} // space or tab or form feed
     //: white ::= eol
-    // add comment to white
+    // //: white ::= comment
 
-    // comment
-    // use printable for making comments
+    // comments
+    // //: comment ::= "//" printable** eol white* // single line comment
+    // //: comment ::= "/*" printable** "*/" // multi line comment
 
     // to handle the common end-of-line sequences on different types
     // of systems, we treat the sequence CR+LF as an end of line.
@@ -652,13 +704,13 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     public void registerNewline(int pos)
     {
         errorMsg.newline(pos-1);
-    }
+    }fasdfas
 
     // Potentially useful definitions
     // printable is any character than shows up when you type
     //: printable ::= {" ".."~"} => pass
 
-    // eof is the end of file.  It does not match any character.
+    // eof is the end of file. It does not match any character.
     //: eof ::= !{0..255} => void
 
     //////////// DUMMY TOKEN AND WHITESPACE DEFINITIONS ////////////
@@ -666,9 +718,6 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     // reduce the number of states of you remove (or comment out) the
     // dummy definition.
     ////////////////////////////////////////////////////////////////
-    
-    //: ID ::= !{255} {255} => text
-    //: STRING_LITERAL ::= !{255} {255} => text
     
     public int return0(char dummy) { return 0; }
 

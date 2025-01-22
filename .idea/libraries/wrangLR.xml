@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="wrangLR">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/asst1Starter/src/wrangLR.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
