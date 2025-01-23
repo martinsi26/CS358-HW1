@@ -4,6 +4,24 @@ class +
 234 567
 
 for_each
-"c"
+'c'
 "Hello World!"
 
+// hello world /
+
+/////////
+
+/
+
+
+/* akjsl;efjeakl;sjl; */
+
+/* afjkls;ejfka;lsejkl;f //////*
+********
+*//*
+ajskl;efj;alsf
+asjefkl;as
+
+*/
+
++
