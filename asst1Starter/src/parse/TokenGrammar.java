@@ -478,7 +478,7 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     {
         reportTok(pos, "character literal with ASCII value: "+n);
     }
-
+    
     //////////////////////////////////////////
     ////Your modifications should start here
     //////////////////////////////////////////
@@ -633,6 +633,7 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     }
 
     // a numeric literal
+    //: INT_LITERAL ::= INT_LITERAL_HEX => pass
     //: INT_LITERAL ::= # digit++ white* =>
     public int convertToInt(int pos, List<Character> s)
     {
@@ -643,6 +644,21 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
         catch (NumberFormatException nfx)
         {
             error(pos, new OutOfRangeError(s.toString()));
+            return 0;
+        }
+    }
+
+    // : INT_LITERAL_OCT ::=
+    
+    //: hex_digits ::= digit => pass
+    //: hex_digits ::= {"A".."F"} => pass
+    //: hex_start ::= "0" {"x" "X"} => void
+    //: INT_LITERAL_HEX ::= # hex_start hex_digits++ =>
+    public int convertHexToInt(int pos, List<Character> s) {
+        try {
+            return Integer.parseInt(s.toString(), 16);
+        } catch (NumberFormatException nfx) {
+            error(pos, new OutOfRangeError(s.toString));
             return 0;
         }
     }
@@ -705,6 +721,10 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     //: comment_stuff ::= star
     //: comment_stuff ::= eol
     //: comment ::= "/*" comment_stuff** "*/"
+    // public String warningMessage(char slash, char star) 
+    // {
+
+    // }
 
     // to handle the common end-of-line sequences on different types
     // of systems, we treat the sequence CR+LF as an end of line.
