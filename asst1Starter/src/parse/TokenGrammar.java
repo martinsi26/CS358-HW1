@@ -3,7 +3,7 @@ package parse;
 import java.util.List;
 
 // enhancements in assignment:
-// - none
+// - Extension 1
 
 import errorMsg.*;
 
@@ -663,8 +663,52 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     //     }
     // }
 
+    //: character_printable ::= {32..91 93..126} => pass
+    //: character_printable ::= back_back => pass
+    //: character_printable ::= back_dquote => pass
+    //: character_printable ::= back_squote => pass
+    //: character_printable ::= back_n => pass
+    //: character_printable ::= back_tab => pass
+    //: character_printable ::= back_form => pass
+    //: character_printable ::= back_return => pass
+    //: back_back ::= "\\" =>
+    public char makeBackSlash(char a, char b) 
+    {
+        return '\\';
+    }
+    //: back_dquote ::= '\"' =>
+    public char makeDQuote(char a, char b) 
+    {
+        return '\"';
+    }
+    //: back_squote ::= "\'" =>
+    public char makeSQuote(char a, char b) 
+    {
+        return '\'';
+    }
+    //: back_n ::= "\n" =>
+    public char makeNewLine(char a, char b) 
+    {
+        return '\n';
+    }
+    //: back_tab ::= "\t" =>
+    public char makeTab(char a, char b) 
+    {
+        return '\t';
+    }
+    //: back_form ::= "\f" =>
+    public char makeForm(char a, char b) 
+    {
+        return '\f';
+    }
+    //: back_return ::= "\r" =>
+    public char makeReturn(char a, char b) 
+    {
+        return '\r';
+    }
+
     //: dq ::= '"' => void
-    //: stringChar ::= !dq printable => pass
+    //: stringChar ::= !dq character_printable => pass
     //: STRING_LITERAL ::= dq stringChar* dq white* =>
     public String makeString(List<Character> s) 
     {
@@ -672,7 +716,7 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     }
 
     //: sq ::= "'" => void
-    //: CHARACTER_LITERAL ::= sq printable sq white* =>
+    //: CHARACTER_LITERAL ::= sq character_printable sq white* =>
     public int makeChar(char printable)
     {
         return (int)printable;
@@ -717,15 +761,19 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     // multi line comments //
     //=====================//
     //: star ::= "*" !"/"
-    //: comment_printable ::= {32..41 43..126} // exclude *
+    //: slash ::= "/" !"*"
+    //: slash_star ::= # "/*" =>
+    public void errorMessage(int pos, char a, char b) {
+        String msg = "There is a /* in the comment";
+        warning(pos, new CompWarning(msg));
+    }
+    //: comment_printable ::= {32..41 43..46 48..126} // exclude * and /
     //: comment_stuff ::= comment_printable
     //: comment_stuff ::= star
+    //: comment_stuff ::= slash
+    //: comment_stuff ::= # slash_star
     //: comment_stuff ::= eol
     //: comment ::= "/*" comment_stuff** "*/"
-    // public String warningMessage(char slash, char star) 
-    // {
-
-    // }
 
     // to handle the common end-of-line sequences on different types
     // of systems, we treat the sequence CR+LF as an end of line.
