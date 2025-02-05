@@ -5,6 +5,7 @@ import java.util.List;
 // enhancements in assignment:
 // - Extension 1
 // - Extension 2
+// - Extension 3
 
 import errorMsg.*;
 
