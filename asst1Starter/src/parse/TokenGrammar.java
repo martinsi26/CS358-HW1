@@ -4,6 +4,7 @@ import java.util.List;
 
 // enhancements in assignment:
 // - Extension 1
+// - Extension 2
 
 import errorMsg.*;
 
@@ -632,9 +633,46 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
         return letter + s.toString();
     }
 
+    //: oct_start ::= "0" !{"x" "X"} => void
+    //: oct_digit ::= {"0".."7"} => pass
+    //: oct_literal ::= # oct_start oct_digit++ white* =>
+    public int convertOctToInt(int pos, List<Character> s) 
+    {
+        try 
+        {
+            return Integer.parseInt(s.toString(), 8);
+        } 
+        catch (NumberFormatException nfx) {
+            error(pos, new OutOfRangeError("0" + s.toString()));
+            return 0;
+        }
+    }
+    
+    //: hex_start ::= "0" {"x" "X"} => void
+    //: hex_digit ::= digit => pass
+    //: hex_digit ::= {"A".."F" "a".."f"} => pass
+    //: hex_literal ::= # hex_start hex_digit++ white* =>
+    public int convertHexToInt(int pos, List<Character> s) 
+    {
+        try 
+        {
+            return Integer.parseInt(s.toString(), 16);
+        } 
+        catch (NumberFormatException nfx) {
+            error(pos, new OutOfRangeError("0X" + s.toString()));
+            return 0;
+        }
+    }
+
     // a numeric literal
-    // : INT_LITERAL ::= INT_LITERAL_HEX => pass
-    //: INT_LITERAL ::= # digit++ white* =>
+    //: INT_LITERAL ::= oct_literal => pass
+    //: INT_LITERAL ::= hex_literal => pass
+    //: INT_LITERAL ::= "0" !printable  white* =>
+    public int zero(char a)
+    {
+        return 0;
+    }
+    //: INT_LITERAL ::= # !"0" digit++ white* =>
     public int convertToInt(int pos, List<Character> s)
     {
         try
@@ -647,21 +685,6 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
             return 0;
         }
     }
-
-    // : INT_LITERAL_OCT ::=
-    
-    // : hex_digits ::= digit => pass
-    // : hex_digits ::= {"A".."F"} => pass
-    // : hex_start ::= "0" {"x" "X"} => void
-    // : INT_LITERAL_HEX ::= # hex_start hex_digits++ =>
-    // public int convertHexToInt(int pos, List<Character> s) {
-    //     try {
-    //         return Integer.parseInt(s.toString(), 16);
-    //     } catch (NumberFormatException nfx) {
-    //         error(pos, new OutOfRangeError(s.toString));
-    //         return 0;
-    //     }
-    // }
 
     //: character_printable ::= {32..91 93..126} => pass
     //: character_printable ::= back_back => pass
